@@ -45,18 +45,19 @@ namespace BrainJam2020
             // called by  GridBalanceManager.ReSetConfigurations()
 
             InitialNumberOfOperators.Clear();
-            InitialNumberOfOperators.Add("λ", numberOfLambda);
+            InitialNumberOfOperators.Add(StringResources.Lambda, numberOfLambda);
             if (percentageOfOperators == null)
             {
-                InitialNumberOfOperators.Add("w", getRandomValueOfPercentageRange(Size * Size, 5, 2));
-                InitialNumberOfOperators.Add("/", getRandomValueOfPercentageRange(Size * Size, 5, 2));
-                InitialNumberOfOperators.Add("*", getRandomValueOfPercentageRange(Size * Size, 5, 2));
+                InitialNumberOfOperators.Add(StringResources.WildCard, getRandomValueOfPercentageRange(Size * Size, 5, 2));
+                InitialNumberOfOperators.Add(StringResources.Divide, getRandomValueOfPercentageRange(Size * Size, 5, 2));
+                InitialNumberOfOperators.Add(StringResources.Multiply, getRandomValueOfPercentageRange(Size * Size, 5, 2));
                 //InitialNumberOfOperators.Add("p", getRandomValueOfPercentageRange(Size * Size, 4, 1));
-                InitialNumberOfOperators.Add("-", getRandomValueOfPercentageRange(Size * Size, 35, 5));
+                InitialNumberOfOperators.Add(StringResources.Minus, getRandomValueOfPercentageRange(Size * Size, 35, 5));
                 #region restOne
-                InitialNumberOfOperators.Add("+", Size * Size - InitialNumberOfOperators["/"] - InitialNumberOfOperators["*"]
-                                                                - InitialNumberOfOperators["-"] - InitialNumberOfOperators["w"]
-                                                                - InitialNumberOfOperators["λ"]);
+                InitialNumberOfOperators.Add(StringResources.Plus, Size * Size - InitialNumberOfOperators[StringResources.Divide]
+                                                 - InitialNumberOfOperators[StringResources.Multiply]
+                                                                - InitialNumberOfOperators[StringResources.Minus] - InitialNumberOfOperators[StringResources.WildCard]
+                                                                - InitialNumberOfOperators[StringResources.Lambda]);
                 #endregion
             }
             else
@@ -74,7 +75,7 @@ namespace BrainJam2020
                 {
                     foreach (var element in percentageOfOperators)
                     {
-                        if(element.Key=="l")continue;
+                        if(element.Key==StringResources.Lambda)continue;
                         InitialNumberOfOperators[element.Key] += 1;
                         sumOfEntey += 1;
                         if (sumOfEntey >= Size * Size) break;
@@ -84,7 +85,7 @@ namespace BrainJam2020
                 {
                     foreach (var element in percentageOfOperators)
                     {
-                        if (element.Key == "l") continue;
+                        if (element.Key == StringResources.Lambda) continue;
                         InitialNumberOfOperators[element.Key] -= 1;
                         sumOfEntey -= 1;
                         if (sumOfEntey <= Size * Size) break;

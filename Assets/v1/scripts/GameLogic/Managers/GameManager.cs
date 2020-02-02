@@ -58,11 +58,11 @@ namespace BrainJam2020
                 {
                     if (GetTheWinner() == 1)
                     {
-                        wl("!!! FIRST PLAYER WON  !!!");
+                        wl(FirstPlayer.Name+" WON  !!!");
                     }
                     else
                     {
-                        wl("!!!  SECOND PLAYER WON  !!!");
+                        wl(SecondPlayer.Name+" WON  !!!");
                     }
 
                     return;
@@ -81,7 +81,7 @@ namespace BrainJam2020
             Console.Write("\n@"+ player.Name +" => ENTER x y ");
             ins = readIntLine();
             Card card = _Grid.PopCardAt(new CoOrdinate(ins[0], ins[1]));
-            if (card.Operator == "w")
+            if (card.Operator == StringResources.WildCard)
             {
                 Console.Write("!!!   WILDCARD  !!!");
                 Console.WriteLine("CHOOSE ANY OF THE FOLLOWING  +  -  *  /");
@@ -90,11 +90,11 @@ namespace BrainJam2020
                 Console.WriteLine(player.Name+" Score  ===> \"  " + player.Score.Value + " " + card.Operator +
                                   "  " + card.Point.Value + "  \"  \n");
             }
-            else if (card.Operator == "l")
+            else if (card.Operator == StringResources.Lambda)
             {
                 wl("!!! LAMBDA CARD  !!!");
             }
-            else if (card.Operator == "p")
+            else if (card.Operator == StringResources.PowerCard)
             {
                 wl("!!!  PowerCard  !!!");
             }

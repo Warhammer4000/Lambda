@@ -31,10 +31,10 @@ namespace BrainJam2020
             {
                 /*IOperation<RealInt> _op = OperationFactory<RealInt>.Instance.GetOperation(card.Operator);
                 _op.Operate(Score, card.Point);*/
-                if (card.Operator == "+") Score=new RealInt(Score.Value+card.Point.Value);
-                if (card.Operator == "-") Score = new RealInt(Score.Value - card.Point.Value);
-                if (card.Operator == "*") Score = new RealInt(Score.Value * card.Point.Value);
-                if (card.Operator == "/") Score = new RealInt(Score.Value / card.Point.Value);
+                if (card.Operator == StringResources.Plus) Score=new RealInt(Score.Value+card.Point.Value);
+                if (card.Operator == StringResources.Minus) Score = new RealInt(Score.Value - card.Point.Value);
+                if (card.Operator == StringResources.Multiply) Score = new RealInt(Score.Value * card.Point.Value);
+                if (card.Operator == StringResources.Divide) Score = new RealInt(Score.Value / card.Point.Value);
             }
                 
         }
