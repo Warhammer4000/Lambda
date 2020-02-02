@@ -54,9 +54,10 @@ namespace BrainJam2020
                 //InitialNumberOfOperators.Add("p", getRandomValueOfPercentageRange(Size * Size, 4, 1));
                 InitialNumberOfOperators.Add(StringResources.Minus, getRandomValueOfPercentageRange(Size * Size, 35, 5));
                 #region restOne
-                InitialNumberOfOperators.Add(StringResources.Plus, Size * Size - InitialNumberOfOperators["/"] - InitialNumberOfOperators["*"]
-                                                                - InitialNumberOfOperators["-"] - InitialNumberOfOperators["w"]
-                                                                - InitialNumberOfOperators["λ"]);
+                InitialNumberOfOperators.Add(StringResources.Plus, Size * Size - InitialNumberOfOperators[StringResources.Divide]
+                                                 - InitialNumberOfOperators[StringResources.Multiply]
+                                                                - InitialNumberOfOperators[StringResources.Minus] - InitialNumberOfOperators[StringResources.WildCard]
+                                                                - InitialNumberOfOperators[StringResources.Lambda]);
                 #endregion
             }
             else
