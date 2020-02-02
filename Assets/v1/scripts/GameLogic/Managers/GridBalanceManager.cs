@@ -45,18 +45,18 @@ namespace BrainJam2020
             // called by  GridBalanceManager.ReSetConfigurations()
 
             InitialNumberOfOperators.Clear();
-            InitialNumberOfOperators.Add("l", numberOfLambda);
+            InitialNumberOfOperators.Add("λ", numberOfLambda);
             if (percentageOfOperators == null)
             {
                 InitialNumberOfOperators.Add("w", getRandomValueOfPercentageRange(Size * Size, 5, 2));
                 InitialNumberOfOperators.Add("/", getRandomValueOfPercentageRange(Size * Size, 5, 2));
                 InitialNumberOfOperators.Add("*", getRandomValueOfPercentageRange(Size * Size, 5, 2));
-                InitialNumberOfOperators.Add("p", getRandomValueOfPercentageRange(Size * Size, 4, 1));
+                //InitialNumberOfOperators.Add("p", getRandomValueOfPercentageRange(Size * Size, 4, 1));
                 InitialNumberOfOperators.Add("-", getRandomValueOfPercentageRange(Size * Size, 35, 5));
                 #region restOne
                 InitialNumberOfOperators.Add("+", Size * Size - InitialNumberOfOperators["/"] - InitialNumberOfOperators["*"]
                                                                 - InitialNumberOfOperators["-"] - InitialNumberOfOperators["w"]
-                                                                - InitialNumberOfOperators["l"]-InitialNumberOfOperators["p"]);
+                                                                - InitialNumberOfOperators["λ"]);
                 #endregion
             }
             else

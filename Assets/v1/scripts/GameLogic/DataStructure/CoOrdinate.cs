@@ -4,10 +4,10 @@ using System.Text;
 
 namespace BrainJam2020
 {
-    struct CoOrdinate
+    public struct CoOrdinate
     {
-        public int First { get; private set; }
-        public int Second { get; private set; }
+        public int First { get;  }
+        public int Second { get; }
         public CoOrdinate(int first, int second)
         {
             First = first;

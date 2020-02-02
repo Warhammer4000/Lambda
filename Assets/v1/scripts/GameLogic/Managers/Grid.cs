@@ -5,7 +5,8 @@ using DTD.Calculator.Core;
 
 namespace BrainJam2020
 {
-    class Grid
+    [Serializable]
+    public class Grid
     {
         public Grid(int size=10)
         {

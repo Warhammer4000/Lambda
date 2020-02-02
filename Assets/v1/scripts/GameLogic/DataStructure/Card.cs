@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BrainJam2020
 {
-    struct Card
+    public struct Card
     {
-        public Card(int point, String _operator)
+        public Card(int point, string _operator)
         {
             Point = new RealInt(point);
             Operator = _operator;
@@ -18,7 +18,7 @@ namespace BrainJam2020
         
         //private
         public RealInt Point { get; private set; }
-        public String Operator { get; private set; }
+        public string Operator { get; private set; }
         #endregion
 
 
@@ -26,7 +26,7 @@ namespace BrainJam2020
         //public
         public void ResetOperator(String _operator) => Operator = (Operator == "w") ? _operator : Operator;
         public int GetPointInt32() => Point.Value;
-        public string ToString() => "" + Point.ToString() + " " + Operator;
+        public override string ToString() => "" + Point.ToString() + " " + Operator;
 
         #endregion
 

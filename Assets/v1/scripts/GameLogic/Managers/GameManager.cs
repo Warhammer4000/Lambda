@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+
+using UnityEngine;
 
 namespace BrainJam2020
 {
-    class GameManager
+    public class GameManager:MonoBehaviour
     {
-        public GameManager(int GridSize = 10)
-        {
-            _Grid = new Grid(GridSize);
-            FirstPlayer = new Player("Aminul");
-            SecondPlayer = new Player("Kabir");
-        }
-
         #region VARIABLES
 
         public Player FirstPlayer { get; private set; }
@@ -24,6 +17,26 @@ namespace BrainJam2020
 
         #endregion
 
+        [SerializeField] private CardGridManager CardGridManager;
+
+        void Start()
+        {
+            Initialize();
+        }
+
+
+
+        private void Initialize(int gridSize = 10)
+        {
+            _Grid = new Grid(gridSize);
+            FirstPlayer = new Player("Aminul");
+            SecondPlayer = new Player("Kabir");
+            CardGridManager.CreateGrid(_Grid);
+        }
+
+        
+
+       
 
         
         #region METHODS

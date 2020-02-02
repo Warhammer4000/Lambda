@@ -3,7 +3,8 @@ using DTD.Calculator.Core;
 
 namespace BrainJam2020
 {
-    struct RealInt : IOperatorOverLoaded
+    
+    public struct RealInt : IOperatorOverLoaded
     {
         public int Value { get; }
 
@@ -37,11 +38,12 @@ namespace BrainJam2020
             return new RealInt(left.Value % right.Value);
         }
 
-        public string ToString() => "" + Value;
+        public override string ToString() => Value.ToString();
 
         public void PlsOverLoad()
         {
             
         }
+
     }
 }

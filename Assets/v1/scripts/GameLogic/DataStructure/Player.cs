@@ -6,7 +6,7 @@ using  System;
 
 namespace BrainJam2020
 {
-    class Player:IPlayer
+    public class Player:IPlayer
     {
         public Player(string name="user", int score=0, int lambdaCards=0)
         {
@@ -25,7 +25,7 @@ namespace BrainJam2020
         }
         public void ReceiveCard(Card card)
         {
-            if (card.Operator == "l") LambdaCards += 1;
+            if (card.Operator == StringResources.Lambda) LambdaCards += 1;
             else if (card.Operator == "p") return;
             else
             {
