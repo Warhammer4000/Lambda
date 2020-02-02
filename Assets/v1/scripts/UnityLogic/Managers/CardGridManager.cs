@@ -22,6 +22,7 @@ public class CardGridManager : MonoBehaviour
 
     public void CreateGrid(Grid grid)
     {
+        GameObject CardsRoot=new GameObject("CardsRoot");
         var cards = grid.GetCards();
         //todo rework
         int x=1, y=1;
@@ -37,7 +38,7 @@ public class CardGridManager : MonoBehaviour
                 y = 0;
             }
             y++;
-
+            cardObject.transform.parent = CardsRoot.transform;
         }
      
     }
