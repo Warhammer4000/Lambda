@@ -24,7 +24,7 @@ namespace BrainJam2020
 
         #region METHODS
         //public
-        public void ResetOperator(String _operator) => Operator = (Operator == "w") ? _operator : Operator;
+        public void ResetOperator(String _operator) => Operator = (Operator == StringResources.WildCard) ? _operator : Operator;
         public int GetPointInt32() => Point.Value;
         public override string ToString() => "" + Point.ToString() + " " + Operator;
 
