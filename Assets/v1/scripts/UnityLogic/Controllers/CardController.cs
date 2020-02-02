@@ -25,4 +25,6 @@ public class CardController : MonoBehaviour
         CardAnimator.SetTrigger("FlipCard");
     }
 
+    public CoOrdinate GetCoOrdinate => Card.CoOrdinate;
+
 }

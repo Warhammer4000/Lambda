@@ -8,16 +8,29 @@ namespace BrainJam2020
 {
     public class GameManager:MonoBehaviour
     {
+
+        public static GameManager Instance;
+
         #region VARIABLES
 
         public Player FirstPlayer { get; private set; }
         public Player SecondPlayer { get; private set; }
         public Grid _Grid { get; set; }
-        public int MarginalScore { get; set; }
+        public int MarginalScore = 31;
 
         #endregion
 
         [SerializeField] private CardGridManager CardGridManager;
+
+        public SoreController ScoreControllerP1;
+        public SoreController ScoreControllerP2;
+
+
+
+        void Awake()
+        {
+            Instance = this;
+        }
 
         void Start()
         {
@@ -29,8 +42,11 @@ namespace BrainJam2020
         private void Initialize(int gridSize = 10)
         {
             _Grid = new Grid(gridSize);
-            FirstPlayer = new Player("Aminul");
-            SecondPlayer = new Player("Kabir");
+            FirstPlayer = new Player("Aminul"){PlayerType = Player.PlayerEnum.Player1};
+            SecondPlayer = new Player("Kabir"){PlayerType = Player.PlayerEnum.Player2};
+            ScoreControllerP1.InitializePlayer(FirstPlayer);
+            ScoreControllerP2.InitializePlayer(SecondPlayer);
+
             CardGridManager.CreateGrid(_Grid);
         }
 
@@ -44,7 +60,7 @@ namespace BrainJam2020
 
         public void StartPlay(int marginalScore=31)
         {
-            MarginalScore = marginalScore;
+            /*MarginalScore = marginalScore;
             int Turn = 1;
             int[] ins;
             string inps;
@@ -52,7 +68,7 @@ namespace BrainJam2020
             while (_Grid.CurrentNumberOfCards > 0)
             {
 
-                willIterate = (Turn % 2 == 1) ? MakeMove(FirstPlayer) : MakeMove(SecondPlayer);
+                //willIterate = (Turn % 2 == 1) ? MakeMove(FirstPlayer) : MakeMove(SecondPlayer);
                 if(willIterate)return;
                 if (GetTheWinner() != 0)
                 {
@@ -68,70 +84,28 @@ namespace BrainJam2020
                     return;
                 }
                 Turn++;
-            }
+            }*/
         }
         public void ResetGrid(Grid grid) => _Grid = grid;
 
         //private
-        bool MakeMove(Player player, bool isStandOffMode=false)
+        public void MakeMove(Player player,CoOrdinate coOrdinate)
         {
-            int[] ins;
-            string inps;
-            printGrid();
-            Console.Write("\n@"+ player.Name +" => ENTER x y ");
-            ins = readIntLine();
-            Card card = _Grid.PopCardAt(new CoOrdinate(ins[0], ins[1]));
+            var card = _Grid.PopCardAt(coOrdinate);
             if (card.Operator == StringResources.WildCard)
             {
-                Console.Write("!!!   WILDCARD  !!!");
-                Console.WriteLine("CHOOSE ANY OF THE FOLLOWING  +  -  *  /");
-                inps = Console.ReadLine();
-                card.ResetOperator(inps);
-                Console.WriteLine(player.Name+" Score  ===> \"  " + player.Score.Value + " " + card.Operator +
-                                  "  " + card.Point.Value + "  \"  \n");
+                WildCardPicker.Instance.RegisterPlayerAndCard(player,card);
+                return;
             }
-            else if (card.Operator == StringResources.Lambda)
-            {
-                wl("!!! LAMBDA CARD  !!!");
-            }
-            else if (card.Operator == StringResources.PowerCard)
-            {
-                wl("!!!  PowerCard  !!!");
-            }
-            else
-            {
-                Console.WriteLine(player.Name+" Score  ===> \"  " + player.Score.Value + " " + card.Operator +
-                                  "  " + card.Point.Value + "  \"  \n");
-            }
+
 
             player.ReceiveCard(card);
-            if (isStandOffMode == false)
-            {
-                wl("StandOff ? 'y' for Yes  'n' for No ");
-                inps = Console.ReadLine();
-                if (inps == "y")
-                {
-                    StandOff(player);
-                    return true;
-                }
-                
-            }
-            else
-            {
-                if (player.Score.Value > OtherPlayer(player).Score.Value && player.Score.Value<MarginalScore)
-                {
-                    Console.WriteLine(player.Name+" Won  !!!");
-                    return false;
-                }
-                return true;
-            }
-
-            return false;
+        
         }
-        private Player OtherPlayer(Player player) => player == FirstPlayer ? SecondPlayer : FirstPlayer;
+       
         private void StandOff(Player player)
         {
-            Player LastPlayer = (player == FirstPlayer ? SecondPlayer : FirstPlayer);
+            /*Player LastPlayer = (player == FirstPlayer ? SecondPlayer : FirstPlayer);
             if (MakeMove(LastPlayer, true))
             {
                 if (MakeMove(LastPlayer, true))
@@ -142,7 +116,7 @@ namespace BrainJam2020
                         return;
                     }
                 }
-            }
+            }*/
         }
         private int GetTheWinner()
         {

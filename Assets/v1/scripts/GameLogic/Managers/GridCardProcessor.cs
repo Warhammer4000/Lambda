@@ -109,7 +109,10 @@ namespace BrainJam2020
             for(int i=1; i<=GridSize; i++)
             for (int j = 1; j <= GridSize; j++)
             {
-                CardMappedByCoOrdinated.Add(new CoOrdinate(i,j), cards[cardIndex++]);
+                cards[cardIndex].CoOrdinate = new CoOrdinate(i, j);
+                CardMappedByCoOrdinated.Add(cards[cardIndex].CoOrdinate, cards[cardIndex]);
+                
+                cardIndex++;
             }
         }
 

@@ -8,6 +8,19 @@ namespace BrainJam2020
 {
     public class Player:IPlayer
     {
+
+        public enum PlayerEnum
+        {
+            Player1,Player2,AI
+        }
+
+        public delegate void ScoreEvent(int score);
+
+        public ScoreEvent OnScoreChange;
+        public ScoreEvent OnLambdaChange;
+
+        public PlayerEnum PlayerType;
+
         public Player(string name="user", int score=0, int lambdaCards=0)
         {
             Name = name;
@@ -25,18 +38,23 @@ namespace BrainJam2020
         }
         public void ReceiveCard(Card card)
         {
-            if (card.Operator == StringResources.Lambda) LambdaCards += 1;
-            else if (card.Operator == "p") return;
-            else
+            if (card.Operator == StringResources.Lambda)
             {
-                /*IOperation<RealInt> _op = OperationFactory<RealInt>.Instance.GetOperation(card.Operator);
-                _op.Operate(Score, card.Point);*/
-                if (card.Operator == StringResources.Plus) Score=new RealInt(Score.Value+card.Point.Value);
-                if (card.Operator == StringResources.Minus) Score = new RealInt(Score.Value - card.Point.Value);
-                if (card.Operator == StringResources.Multiply) Score = new RealInt(Score.Value * card.Point.Value);
-                if (card.Operator == StringResources.Divide) Score = new RealInt(Score.Value / card.Point.Value);
+                LambdaCards += 1;
+                OnLambdaChange?.Invoke(LambdaCards);
+                return;
             }
-                
+            
+            //else if (card.Operator == "p") return;
+
+            /*IOperation<RealInt> _op = OperationFactory<RealInt>.Instance.GetOperation(card.Operator);
+                _op.Operate(Score, card.Point);*/
+            if (card.Operator == StringResources.Plus) Score=new RealInt(Score.Value+card.Point.Value);
+            if (card.Operator == StringResources.Minus) Score = new RealInt(Score.Value - card.Point.Value);
+            if (card.Operator == StringResources.Multiply) Score = new RealInt(Score.Value * card.Point.Value);
+            if (card.Operator == StringResources.Divide) Score = new RealInt(Score.Value / card.Point.Value);
+            OnScoreChange?.Invoke(Score.Value);
+
         }
 
         #endregion
