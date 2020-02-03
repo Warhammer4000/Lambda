@@ -48,6 +48,7 @@ namespace BrainJam2020
             ScoreControllerP2.InitializePlayer(SecondPlayer);
 
             CardGridManager.CreateGrid(_Grid);
+            OperatorUI.Instance.UpdateUI(_Grid.GetOperatorsCount());
         }
 
         
@@ -58,40 +59,13 @@ namespace BrainJam2020
         #region METHODS
         //public 
 
-        public void StartPlay(int marginalScore=31)
-        {
-            /*MarginalScore = marginalScore;
-            int Turn = 1;
-            int[] ins;
-            string inps;
-            bool willIterate = true;
-            while (_Grid.CurrentNumberOfCards > 0)
-            {
-
-                //willIterate = (Turn % 2 == 1) ? MakeMove(FirstPlayer) : MakeMove(SecondPlayer);
-                if(willIterate)return;
-                if (GetTheWinner() != 0)
-                {
-                    if (GetTheWinner() == 1)
-                    {
-                        wl(FirstPlayer.Name+" WON  !!!");
-                    }
-                    else
-                    {
-                        wl(SecondPlayer.Name+" WON  !!!");
-                    }
-
-                    return;
-                }
-                Turn++;
-            }*/
-        }
         public void ResetGrid(Grid grid) => _Grid = grid;
 
         //private
         public void MakeMove(Player player,CoOrdinate coOrdinate)
         {
             var card = _Grid.PopCardAt(coOrdinate);
+            OperatorUI.Instance.UpdateUI(_Grid.GetOperatorsCount());
             if (card.Operator == StringResources.WildCard)
             {
                 WildCardPicker.Instance.RegisterPlayerAndCard(player,card);
@@ -100,7 +74,7 @@ namespace BrainJam2020
 
 
             player.ReceiveCard(card);
-        
+            
         }
        
         private void StandOff(Player player)

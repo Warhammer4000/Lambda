@@ -45,15 +45,13 @@ namespace BrainJam2020
                 return;
             }
             
-            //else if (card.Operator == "p") return;
-
-            /*IOperation<RealInt> _op = OperationFactory<RealInt>.Instance.GetOperation(card.Operator);
-                _op.Operate(Score, card.Point);*/
+            
             if (card.Operator == StringResources.Plus) Score=new RealInt(Score.Value+card.Point.Value);
             if (card.Operator == StringResources.Minus) Score = new RealInt(Score.Value - card.Point.Value);
             if (card.Operator == StringResources.Multiply) Score = new RealInt(Score.Value * card.Point.Value);
             if (card.Operator == StringResources.Divide) Score = new RealInt(Score.Value / card.Point.Value);
             OnScoreChange?.Invoke(Score.Value);
+
 
         }
 

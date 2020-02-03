@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 
@@ -29,7 +30,7 @@ namespace BrainJam2020
         }
 
         //private
-        private int[] CreatePoints()
+        private Stack<int> CreatePoints()
         {
             //called by GridCardProcessor().CreateShuffledPoints()
             int[] points=new int[GridSize*GridSize];
@@ -38,9 +39,9 @@ namespace BrainJam2020
             {
                 for(int i=1; i<= element.Value && index<GridSize*GridSize; i++)points[index++]= element.Key;
             }
-            return points;
+            return CreateRandomStack(points);
         }
-        private string[] CreateOperators()
+        private Stack<string> CreateOperators()
         {
             //called by GridCardProcessor().CreateShuffledOperators()
             string[] _operators = new string[GridSize * GridSize];
@@ -49,53 +50,34 @@ namespace BrainJam2020
             {
                 for (int i = 1; i <= element.Value && index<GridSize*GridSize; i++) _operators[index++] = element.Key;
             }
-            return _operators;
+            return CreateRandomStack(_operators);
         }
-        private T[] Shuffle<T>(T[] array)
+        private Stack<T> CreateRandomStack<T>(T[] array)
         {
-            // called by GridCardProcessor().CreateShuffledPoints() & CreateShuffledOperators
+            
+            Stack<T> randomStack=new Stack<T>();
 
-            Random random =new Random();
-            for (int i = 0; i < GridSize * GridSize; i++)
+            array.Shuffle();
+
+            foreach (var item in array)
             {
-                var swapIndex = random.Next(0,GridSize*GridSize-1);
-                var temporary = array[i];
-                array[i] = array[swapIndex];
-                array[swapIndex] = temporary;
+                randomStack.Push(item);
             }
-            for (int i = 0; i < GridSize * GridSize; i++)
-            {
-                var swapIndex = random.Next(0, GridSize * GridSize - 1);
-                var temporary = array[i];
-                array[i] = array[swapIndex];
-                array[swapIndex] = temporary;
-            }
-            return array;
+
+            return randomStack;
         }
-        private int[] CreateShuffledPoints()
-        {
-            // called by  GridCardProcessor().CreateCards()
-            int[] points = CreatePoints();
-            //Console.WriteLine("process.createShuffledPoints "+points.Length);
-            points = Shuffle<int>(points);
-            return points;
-        }
-        private string[] CreateShuffledOperators()
-        {
-            // called by  GridCardProcessor().CreateCards()
-            string[] _operators = CreateOperators();
-            _operators = Shuffle<string>(_operators);
-            return _operators;
-        }
+      
         private Card[] CreateShuffledCards()
         {
-            int[] shuffeledPoints = CreateShuffledPoints();
-            string[] shuffledOperators = CreateShuffledOperators();
+            Stack<int> shuffeledPoints = CreatePoints();
+            Stack<string> shuffledOperators = CreateOperators();
             //Console.WriteLine("process.createshuffledcards "+shuffeledPoints.Length);
-            Card[] listCard=new Card[GridSize*GridSize];
+            Card[] listCard =new Card[GridSize * GridSize];
+
+           
             for (int i = 0; i < GridSize * GridSize; i++)
             {
-                listCard[i]=new Card(shuffeledPoints[i], shuffledOperators[i]);
+                listCard[i]=new Card(shuffeledPoints.Pop(), shuffledOperators.Pop());
             }
             return listCard;
         }

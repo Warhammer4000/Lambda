@@ -12,7 +12,7 @@ public class CardController : MonoBehaviour
     [SerializeField] private TextMeshPro Operator;
     [SerializeField] private Animator CardAnimator;
 
-
+    public bool cardFlipped;
     public void RegisterCard(Card card)
     {
         Card = card;
@@ -22,6 +22,7 @@ public class CardController : MonoBehaviour
 
     public void FlipCard()
     {
+        cardFlipped = true;
         CardAnimator.SetTrigger("FlipCard");
     }
 

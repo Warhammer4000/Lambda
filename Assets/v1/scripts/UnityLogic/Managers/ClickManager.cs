@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BrainJam2020;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,14 +13,22 @@ public class ClickManager : MonoBehaviour
 
     private Player currentPlayer;
     private bool StandOff;
-    private int StandOffCounter;
+    private int StandOffCounter=1;
 
     [SerializeField] private Button Player1StandOff;
     [SerializeField] private Button Player2StandOff;
 
+    [SerializeField] private GameObject Player1Turn;
+    [SerializeField] private GameObject Player2Turn;
+
+    [SerializeField] private GameObject TurnLeftP1;
+    [SerializeField] private GameObject TurnLeftP2;
+    [SerializeField] private TextMeshProUGUI CountP1;
+    [SerializeField] private TextMeshProUGUI CountP2;
 
     void Update()
     {
+        if(StandOffCounter>3)return;
         if (!Input.GetMouseButtonDown(0)) return;
         if (EventSystem.current.IsPointerOverGameObject(-1))
         {
@@ -31,15 +40,17 @@ public class ClickManager : MonoBehaviour
             Debug.Log(hit.transform.name);
             if (hit.transform.tag == CardTag)
             {
-                if (!StandOff)
-                {
-                    PlayerTurn();
-                }
+                
                 
                 
                
                 
                 CardController cardController = hit.transform.GetComponent<CardController>();
+                if(cardController.cardFlipped)return;
+                if (!StandOff)
+                {
+                    PlayerTurn();
+                }
                 GameManager.Instance.MakeMove(currentPlayer,cardController.GetCoOrdinate);
                 cardController.FlipCard();
 
@@ -52,10 +63,12 @@ public class ClickManager : MonoBehaviour
 
     private void PlayerTurn()
     {
+        
         if (currentPlayer == null)
         {
             currentPlayer = GameManager.Instance.FirstPlayer;
             Player1StandOff.interactable = true;
+            ToggleTurn();
             return;
         }
         switch (currentPlayer.PlayerType)
@@ -76,6 +89,16 @@ public class ClickManager : MonoBehaviour
     {
         Player1StandOff.interactable = !Player1StandOff.interactable;
         Player2StandOff.interactable = !Player2StandOff.interactable;
+        if(!StandOff)
+        ToggleTurn();
+   
+    }
+
+
+    void ToggleTurn()
+    {
+        Player1Turn.SetActive(Player2StandOff.interactable);
+        Player2Turn.SetActive(Player1StandOff.interactable);
     }
 
     public void StandOffStart()
@@ -85,14 +108,27 @@ public class ClickManager : MonoBehaviour
             DecideWinner();
             return;
         }
-        PlayerTurn();
         StandOff = true;
+        PlayerTurn();
+        
+        
+        if (currentPlayer.PlayerType == Player.PlayerEnum.Player1)
+        {
+            TurnLeftP1.gameObject.SetActive(true);
+        }
+        else
+        {
+            TurnLeftP2.gameObject.SetActive(true);
+        }
     }
 
     private void StandOffMove()
     {
+        
+        CountP1.text = (3-StandOffCounter).ToString();
+        CountP2.text = (3 - StandOffCounter).ToString();
         StandOffCounter++;
-        if (StandOffCounter > 2)
+        if (StandOffCounter > 3)
         {
             DecideWinner();
         }
@@ -102,6 +138,12 @@ public class ClickManager : MonoBehaviour
     {
         int p1 = GameManager.Instance.FirstPlayer.Score.Value;
         int p2 = GameManager.Instance.SecondPlayer.Score.Value;
+
+        Player1Turn.SetActive(false);
+        Player2Turn.SetActive(false);
+        TurnLeftP1.SetActive(false);
+        TurnLeftP2.SetActive(false);
+
         if ( p1>p2 && p1<=GameManager.Instance.MarginalScore )
         {
             WinnerUI.Instance.ShowWinner(GameManager.Instance.FirstPlayer);

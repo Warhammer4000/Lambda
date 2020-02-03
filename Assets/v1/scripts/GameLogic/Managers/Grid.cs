@@ -23,8 +23,8 @@ namespace BrainJam2020
 
 
         //private
-        private Dictionary<String, int> OperatorCount = new Dictionary<string, int>();
-        private Dictionary<CoOrdinate, Card> Cards = null;
+        private Dictionary<string, int> OperatorCount = new Dictionary<string, int>();
+        private Dictionary<CoOrdinate, Card> Cards;
         private GridCardProcessor gridCardProcessorV=new GridCardProcessor();
         private GridBalanceManager gridBalanceManagerV;
 
@@ -65,7 +65,7 @@ namespace BrainJam2020
             CurrentNumberOfCards = Size * Size;
         }
         public Dictionary<CoOrdinate, Card> GetCards() => Cards;
-        public Dictionary<String, int> GetOperatorsCount() => OperatorCount==null?default:OperatorCount;
+        public Dictionary<string, int> GetOperatorsCount() => OperatorCount;
         
         //private
         private void DeleteCardAt(CoOrdinate index)

@@ -16,15 +16,22 @@ public class WinnerUI : MonoBehaviour
 
     [SerializeField]private GameObject WinnerPanel;
     [SerializeField]private TextMeshProUGUI WinnerName;
+    private int waitTime = 4;
     public void ShowWinner(Player player)
     {
-        WinnerPanel.SetActive(true);
-        WinnerName.text = player.PlayerType.ToString();
+        StartCoroutine(EndGameRutine(player));
     }
 
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneName);
+    }
+
+    IEnumerator EndGameRutine(Player player)
+    {
+        yield return new WaitForSeconds(waitTime);
+        WinnerPanel.SetActive(true);
+        WinnerName.text = player.PlayerType.ToString();
     }
 
 
