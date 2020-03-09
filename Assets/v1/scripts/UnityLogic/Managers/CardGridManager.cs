@@ -18,8 +18,6 @@ public class CardGridManager : MonoBehaviour
 
     public GameObject CardPrefab;
 
-   
-
     public void CreateGrid(Grid grid)
     {
         var cards = grid.GetCards();
@@ -37,10 +35,6 @@ public class CardGridManager : MonoBehaviour
                 y = 0;
             }
             y++;
-
         }
-     
     }
-
-   
 }

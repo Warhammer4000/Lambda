@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BrainJam2020;
+﻿using BrainJam2020;
 using TMPro;
 using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
     [SerializeField] private Card Card;
-
     [SerializeField] private TextMeshPro Number;
     [SerializeField] private TextMeshPro Operator;
     [SerializeField] private Animator CardAnimator;
